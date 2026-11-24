@@ -7,3 +7,6 @@ class CNCInterface(ABC):
     @abstractmethod
     def calculate_stroke_2(self, stroke):
         pass   
+    @abstractmethod
+    def print_gcode(self, *lines):
+        pass

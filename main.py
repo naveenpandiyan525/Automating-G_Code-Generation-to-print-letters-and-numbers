@@ -9,7 +9,7 @@ class main:
         with open ("letterCoardinates.json","r") as file:
             self.__letterCoardinates = json.load(file)
 
-    def Gcode_generation(self,userInputList):
+    def Gcode_generation(self,userInputList, output_file):
         for letterOrderIndex, letter in enumerate(userInputList):
             try:
             #Check letter and number is present in the Json or not
@@ -21,7 +21,7 @@ class main:
 
             strokes = self.strokes(letter)
 
-            CNCImplementation = CI.CNCImplementation(GV())
+            CNCImplementation = CI.CNCImplementation(GV(), output_file)
             #calling the calculate_stroke_1 and calculate_stroke_2 abstract methods from CNCImplementation class based on the stroke index
             for strokeIndex, stroke in enumerate(strokes, start=1):
                 try:
@@ -45,15 +45,19 @@ class main:
 
 
 #Getting UserInput
-userInput = input("Enter your register number = ")
+userInput = input("Enter your register number =")
+UserInputForFileName = input("Enter the Output file name =") 
 userInput = userInput.upper()
 userInput = userInput.replace(" ", "")
 userInputList = list(userInput)
 
 try:
     main = main()
-    print("G21")
-    print("G90")
-    main.Gcode_generation(userInputList)
+
+    with open(f"{UserInputForFileName}.txt", "w", encoding="utf-8") as output_file:
+        output_file.write("G21\n")
+        output_file.write("G90\n")
+        main.Gcode_generation(userInputList, output_file)
+        print("File Generation successfull")
 except Exception as e:
-    print("Error Occured : ",e)
+    print("Error Occured :",e)
