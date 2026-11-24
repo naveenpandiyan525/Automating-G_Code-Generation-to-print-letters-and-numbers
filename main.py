@@ -11,12 +11,13 @@ class main:
 
     def Gcode_generation(self,userInputList):
         for letterOrderIndex, letter in enumerate(userInputList):
-
+            try:
             #Check letter and number is present in the Json or not
-            if letter not in self.__letterCoardinates:
-                print(f"letter not found: {letter}")
-                continue
-                
+             if letter in self.__letterCoardinates:
+                #print(f"letter not found: {letter}")
+                pass
+            except Exception as e:
+                print(e)    
 
             strokes = self.strokes(letter)
 
