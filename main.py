@@ -1,0 +1,61 @@
+import CNC_Implementation as CI
+from Global_Var import GlobalVariables as GV
+import json
+
+class main():
+
+    def __init__(self):
+        #Read LetterCooardinates Json File
+        with open ("letterCoardinates.json","r") as file:
+            self.__letterCoardinates = json.read(file)
+
+    def Gcode_generation(self,userInputList):
+        for letterOrderIndex, letter in enumerate(userInputList):
+
+            #Check letter and number is present in the Json or not
+            try:
+                if letter in self.__letterCoardinates:
+                    continue
+            except Exception as e:
+                print("Letter Not found",e)
+
+            strokes = main.strokes(letter)
+
+            CNCImplementation = CI.CNCImplementation(GV)
+            #calling the calculate_stroke_1 and calculate_stroke_2 abstract methods from CNCImplementation class based on the stroke index
+            for strokeIndex, stroke in enumerate(strokes, start=1):
+                try:
+                    if strokeIndex == 1:
+                        CNCImplementation.calculate_stroke_1(stroke,letterOrderIndex)
+                    else:
+                        CNCImplementation.calculate_stroke_2(stroke,letterOrderIndex)
+                except Exception as e:
+                    print("Error Occured",e)
+
+    def strokes(self,letter):
+        #Fetch the coordinates for the letter or number from the Json
+        coordinates = self.__letterCoardinates[letter]
+        if len(coordinates) == 2:
+            strokes = coordinates
+            return strokes
+        else:
+            strokes = (coordinates,)
+            return strokes
+
+
+
+#Getting UserInput
+userInput = input("Enter your register number = ")
+userInput = userInput.upper()
+userInput = userInput.replace(" ", "")
+userInputList = list(userInput)
+
+try:
+    main = main()
+    main.Gcode_generation(userInputList)
+except Exception as e:
+    print("Error Occured : ",e)
+
+
+
+

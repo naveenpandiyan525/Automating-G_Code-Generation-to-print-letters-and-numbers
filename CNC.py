@@ -37,8 +37,6 @@ CUT_Z = -0.300
 FEED_XY = 30.000
 FEED_Z = 10.000
 
-
-
 userInput = input("Enter your register number = ")
 userInput = userInput.upper()
 userInput = userInput.replace(" ", "")
