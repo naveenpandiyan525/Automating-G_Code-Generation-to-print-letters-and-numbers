@@ -51,13 +51,14 @@ userInput = userInput.upper()
 userInput = userInput.replace(" ", "")
 userInputList = list(userInput)
 
-try:
-    main = main()
+if __name__ == "__main__":
+    try:
+        main = main()
 
-    with open(f"{UserInputForFileName}.txt", "w", encoding="utf-8") as output_file:
-        output_file.write("G21\n")
-        output_file.write("G90\n")
-        main.Gcode_generation(userInputList, output_file)
-        print("File Generation successfull")
-except Exception as e:
-    print("Error Occured :",e)
+        with open(f"{UserInputForFileName}.txt", "w", encoding="utf-8") as output_file:
+            output_file.write("G21\n")
+            output_file.write("G90\n")
+            main.Gcode_generation(userInputList, output_file)
+            print("File Generation successfull")
+    except Exception as e:
+        print("Error Occured :",e)
